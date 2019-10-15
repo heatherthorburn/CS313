@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Integer-Server/Integer-Server.iml" filepath="$PROJECT_DIR$/Integer-Server/Integer-Server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TCP-ClientServer.iml" filepath="$PROJECT_DIR$/TCP-ClientServer.iml" />
+    </modules>
+  </component>
+</project>
