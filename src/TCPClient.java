@@ -1,3 +1,12 @@
+/*
+The TCPClient program runs off of the command line and gets the parameters passed in from the command line:
+
+An example: java TCPClient google.com 80
+
+where google.com is the ip-address (hostnames like URLs can also be used) and the port, like port 80.
+
+
+ */
 
 import java.net.*;
 import java.io.*;
@@ -6,28 +15,28 @@ import java.util.Scanner;
 public class TCPClient {
     public static void main(String [] args){
         try {
-            String ip_address = args[0];
-            int port_number = Integer.parseInt(args[1]);
+            String ip_address = args[0]; //Getting the ip_address from the list of strings passed in
+            int port_number = Integer.parseInt(args[1]); //Getting the port number the same way
 
             System.out.println("[*] Attempting connection to " + ip_address + ".");
-            Socket client_socket = new Socket(ip_address, port_number);
+            Socket client_socket = new Socket(ip_address, port_number); //Setting up a socket object for the connection to ip_address:port_number
 
             System.out.println("[!] Connection to " + client_socket.getRemoteSocketAddress() + " Successful!");
 
-            OutputStream toHost = client_socket.getOutputStream();
+            OutputStream toHost = client_socket.getOutputStream(); //Set up and outputStream to send requests to the server
             DataOutputStream output = new DataOutputStream(toHost);
-            output.writeUTF("[*] Contacting:" + client_socket.getRemoteSocketAddress());
+            output.writeUTF("[*] Contacting:" + client_socket.getRemoteSocketAddress()); //Sending request to host
             output.flush();
-            System.out.println("[*]Contacting");
+            System.out.println("[*] Contacting");
 
 
-            InputStream fromHost = client_socket.getInputStream();
+            InputStream fromHost = client_socket.getInputStream(); //recieve response from host
             DataInputStream in = new DataInputStream(fromHost);
-            System.out.println("[!] Response from server: " + in.readUTF());
+            System.out.println("[!] Response from server: " + in.readUTF()); //display response from host
 
             while (true){
                 Scanner scan = new Scanner(System.in);
-                System.out.println("[*] >>");
+                System.out.println("[*] >>"); //Get more user inputted requests
                 String request = scan.nextLine().trim().toLowerCase();
 
                 output.writeUTF(request);
