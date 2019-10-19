@@ -12,7 +12,7 @@ import java.net.*;
 import java.io.*;
 import java.util.Scanner;
 
-public class TCPClient {
+public class TCPClient_Int {
     public static void main(String [] args){
         try {
             Scanner scan = new Scanner(System.in);
@@ -26,17 +26,17 @@ public class TCPClient {
 
             OutputStream toHost = client_socket.getOutputStream(); //Set up and outputStream to send requests to the server
             DataOutputStream output = new DataOutputStream(toHost);
-            output.writeUTF("[*] Contacting:" + client_socket.getRemoteSocketAddress()); //Sending request to host
+            output.writeInt(0); //Sending request to host
             System.out.println("[*] Contacting");
 
             while (true){
                 DataInputStream in = new DataInputStream(client_socket.getInputStream());
-                System.out.println("[!] Response from server: " + in.readUTF()); //display response from host
+                System.out.println("[!] Response from server: " + in.readInt()); //display response from host
 
                 System.out.println("[*] >> "); //Get more user inputted requests
-                String request = scan.nextLine();
+                Integer request = scan.nextInt();
 
-                output.writeUTF(request);
+                output.writeInt(request);
             }
         }
         catch (Exception e){
@@ -45,6 +45,3 @@ public class TCPClient {
         }
     }
 }
-
-
-
