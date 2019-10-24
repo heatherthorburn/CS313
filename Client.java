@@ -1,35 +1,43 @@
-import java.io.*;
 import java.net.*;
+import java.io.*;
+import java.util.Arrays;
 import java.util.Scanner;
 
-class UDPClient
-{
-    public static void main(String args[]) throws Exception
-    {
-        /* Create client socket */
-        DatagramSocket socket = new DatagramSocket();
+public class Client {
 
-        /* Get input from client */
-        Scanner input = new Scanner (System.in);
-        System.out.print("Enter sentence: ");
-        String sentence = input.nextLine().trim();
+    public static void main(String arg[]) throws Exception {
 
-        /* Get info for packet*/
-        byte[] senByte = sentence.getBytes();
-        InetAddress ip = InetAddress.getLocalHost();
+        /* Make object */
+        Scanner scanner = new Scanner(System.in);
+        OurObject obj = new OurObject();
+        System.out.println("Please enter command: ");
+        String comInput = scanner.nextLine();
+        obj.setCommand(comInput);
+        System.out.println("Please enter arguments: ");
+        String argInput = scanner.nextLine();
+        String tokens[] = argInput.split(" ");
+        obj.setArguments(tokens);
 
-        /*Create and send packet to server*/
-        DatagramPacket packet = new DatagramPacket (senByte, senByte.length, ip, 9999);
-        socket.send(packet);
-
-        /* Receive altered user input*/
-        byte[] changedByte = new byte[1024];
-        DatagramPacket changedPacket = new DatagramPacket(changedByte, changedByte.length);
-        socket.receive(changedPacket);
-
-        /* Output result*/
-        String result = new String(changedPacket.getData());
-        System.out.println("Client Output: " + result.trim());
-
+        try {
+            /* Make socket and send to server */
+            Socket socket = new Socket(InetAddress.getLocalHost(), 9999);
+            System.out.println("Connecting...");
+            ObjectOutputStream outStream = new ObjectOutputStream(socket.getOutputStream());
+            ObjectInputStream inStream = new ObjectInputStream(socket.getInputStream());
+            outStream.writeObject(obj);
+            OurObject changedObj = (OurObject) inStream.readObject();
+            System.out.println("Object received from Server");
+            System.out.println("Command: " + changedObj.getCommand());
+            System.out.println("Arguments: " + Arrays.toString(changedObj.getArguments()));
+            System.out.println("Result Field: " + changedObj.getResult());
+            outStream.close();
+            inStream.close();
+            socket.close();
+        } catch (UnknownHostException u) {
+            System.out.println(u);
+        } catch (IOException i) {
+            System.out.println(i);
+        }
     }
+
 }

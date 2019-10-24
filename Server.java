@@ -1,28 +1,48 @@
-import java.io.*;
 import java.net.*;
+import java.io.*;
 
-class UDPServer
-{
-    public static void main(String args[]) throws Exception {
+public class Server {
+    public static void main(String arg[]) throws Exception {
+        try {
+            ServerSocket sock = new ServerSocket(9999);
+            System.out.println("Server started...");
+            Socket socket = sock.accept();
+            System.out.println("Connected!");
 
-        /* Create server socket with same port */
-        DatagramSocket socket = new DatagramSocket(9999);
+            OutputStream outStream = socket.getOutputStream();
+            ObjectOutputStream objOutStream = new ObjectOutputStream(outStream);
 
-        /* Create new packet, receive and alter data*/
-        byte[] senByte = new byte[1024];
-        DatagramPacket packet = new DatagramPacket(senByte, senByte.length);
+            InputStream inStream = socket.getInputStream();
+            ObjectInputStream objInStream = new ObjectInputStream(inStream);
 
-        socket.receive(packet);
-        String data = new String(packet.getData());
+            OurObject obj = (OurObject) objInStream.readObject();
 
-        String result = data.trim().toUpperCase();
+            String command = obj.getCommand();
+            String[] args = obj.getArguments();
 
-        /* Send back altered data to client */
-        byte[] resultByte = result.getBytes();
-        InetAddress ip = InetAddress.getLocalHost();
+            switch (command) {
+                case "getFirstName":
+                    obj.setResult(args[0]);
+                    break;
+                case "getSecondName":
+                    obj.setResult(args[1]);
+                    break;
+                case "concat":
+                    obj.setResult(args[0] + args[1]);
+                    break;
+                case "capitalise":
+                    obj.setResult(args[0].toUpperCase() + " " + args[1].toUpperCase());
+                    break;
+            }
 
-        DatagramPacket packet2 = new DatagramPacket(resultByte, resultByte.length, ip, packet.getPort());
-        socket.send(packet2);
+            objOutStream.writeObject(obj);
+            sock.close();
+            socket.close();
+            inStream.close();
+            outStream.close();
 
+        } catch (IOException i) {
+            System.out.println(i);
+        }
     }
 }
