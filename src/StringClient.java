@@ -6,7 +6,17 @@ public class StringClient {
 
     public static void main(String[] args) {
         try{
-            Scanner scan = new Scanner(System.in);
+            run(args, System.in);
+        }
+        catch(Exception e){
+            System.out.println("Oh No! Something went wrong!");
+            e.printStackTrace();
+        }
+    }
+
+    public static void run(String[] args, InputStream type) {
+        try {
+            Scanner scan = new Scanner(type);
             String ip_address = args[0];
             int port_number = Integer.parseInt(args[1]);
 
@@ -24,7 +34,7 @@ public class StringClient {
             System.out.println("toUpper <firstname> <secondname>");
             System.out.println("toLower <firstname> <secondname>");
 
-            while(true){
+            while (true) {
                 System.out.print(">>");
                 String request = scan.nextLine();
                 toHost.writeUTF(request);
@@ -33,11 +43,11 @@ public class StringClient {
                 System.out.println("Response: " + in.readUTF());
 
             }
-
         }
         catch(Exception e){
             System.out.println("Oh No! Something went wrong!");
             e.printStackTrace();
         }
     }
+
 }
