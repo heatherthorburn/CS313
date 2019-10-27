@@ -5,11 +5,15 @@ import java.util.Scanner;
 public class StringClient {
 
     public static void main(String[] args) {
-        try{
-            run(args, System.in);
+        if(args.length != 2){
+            System.out.println("Please enter a port and host like so: \n StringClient <hostname> <port>");
         }
-        catch(Exception e){
-            System.out.println("Shutting Down");
+        else {
+            try {
+                run(args, System.in);
+            } catch (Exception e) {
+                System.out.println("Shutting Down");
+            }
         }
     }
 
@@ -31,7 +35,7 @@ public class StringClient {
             System.out.println("getFirstName <firstname> <secondname>");
             System.out.println("getSecondName <firstname> <secondname>");
             System.out.println("toUpperCase <firstname> <secondname>");
-            System.out.println("toLowerCase <firstname> <secondname>");
+            System.out.println("concat <firstname> <secondname>");
 
             while (true) {
                 System.out.print(">>");

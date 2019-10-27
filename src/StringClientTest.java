@@ -10,9 +10,7 @@ public class StringClientTest {
 
     @Before
     public void setUp() throws IOException {
-        StringServer server = new StringServer(304);;
-
-
+        StringServer server = new StringServer(304);
     }
 
     @Test
