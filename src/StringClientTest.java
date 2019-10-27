@@ -10,16 +10,16 @@ public class StringClientTest {
 
     @Before
     public void setUp() throws IOException {
-        StringServer server = new StringServer(304);
+
     }
 
     @Test
     public void firstNameTest(){
         String[] args = new String[10];
         args[0] = "localhost";
-        args[1] = "304";
-
+        args[1] = "308";
         ByteArrayInputStream in = new ByteArrayInputStream("getFirstName Martin Harvey".getBytes());
+
         System.setIn(in);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -27,14 +27,14 @@ public class StringClientTest {
 
         StringClient.run(args, System.in);
 
-        assertEquals("Martin", out.toString());
+        assertEquals("Response: Martin", out.toString().trim());
     }
 
     @Test
     public void SecondNameTest(){
         String[] args = new String[10];
         args[0] = "localhost";
-        args[1] = "304";
+        args[1] = "308";
 
         ByteArrayInputStream in = new ByteArrayInputStream(("getSecondName Martin Harvey").getBytes());
         System.setIn(in);
@@ -44,16 +44,16 @@ public class StringClientTest {
 
         StringClient.run(args, System.in);
 
-        assertEquals("Harvey", out.toString());
+        assertEquals("Response: Harvey", out.toString().trim());
     }
 
     @Test
     public void toUpperTest(){
         String[] args = new String[10];
         args[0] = "localhost";
-        args[1] = "304";
+        args[1] = "308";
 
-        ByteArrayInputStream in = new ByteArrayInputStream("toUpper Martin Harvey".getBytes());
+        ByteArrayInputStream in = new ByteArrayInputStream("toUpperCase Martin Harvey".getBytes());
         System.setIn(in);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -61,24 +61,23 @@ public class StringClientTest {
 
         StringClient.run(args, System.in);
 
-        assertEquals("MARTIN HARVEY", out.toString());
+        assertEquals("Response: MARTIN HARVEY", out.toString().trim());
     }
 
     @Test
-    public void toLowerTest(){
+    public void concat(){
+        System.out.println("TOLOWER");
         String[] args = new String[10];
         args[0] = "localhost";
-        args[1] = "304";
+        args[1] = "308";
 
-        ByteArrayInputStream in = new ByteArrayInputStream("toLower Martin Harvey".getBytes());
+        ByteArrayInputStream in = new ByteArrayInputStream("concat Martin Harvey".getBytes());
         System.setIn(in);
-
         ByteArrayOutputStream out = new ByteArrayOutputStream();
+        PrintStream printOut = new PrintStream(out);
         System.setOut(new PrintStream(out));
-
         StringClient.run(args, System.in);
-
-        assertEquals("martin harvey", out.toString());
+        assertEquals("Response: MartinHarvey", out.toString().trim());
     }
 
 
