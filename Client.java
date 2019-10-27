@@ -36,12 +36,19 @@ public class Client {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter port: ");
         int port = scanner.nextInt();
-        System.out.println("Please enter command: ");
-        String comInput = scanner.nextLine();
-        System.out.println("Please enter arguments: ");
-        String argInput = scanner.nextLine();
-        String tokens[] = argInput.split(" ");
-        OurObject obj = new OurObject(comInput, tokens);
+        System.out.println("Please enter command and two arguments: ");
+        String comArgInput = scanner.nextLine();
+        String tokens[] = comArgInput.split(" ");
+
+        while (tokens.length != 3) {
+            System.out.println("Please re-enter command and two arguments: ");
+            comArgInput = scanner.nextLine();
+            tokens = comArgInput.split(" ");
+        }
+
+        String commands[] = {tokens[1], tokens[2]};
+
+        OurObject obj = new OurObject(tokens[0], commands);
         Client start = new Client();
         start.run(obj, port);
     }
