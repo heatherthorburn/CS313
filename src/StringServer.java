@@ -76,6 +76,9 @@ public class StringServer extends Thread{
             }
 
         }
+        catch (EOFException e){
+            System.out.println("No more input from connected client. Exiting!");
+        }
         catch(Exception e){
             System.out.println("Oh No! Something went wrong!");
             e.printStackTrace();

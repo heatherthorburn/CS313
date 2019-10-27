@@ -66,7 +66,6 @@ public class StringClientTest {
 
     @Test
     public void concat(){
-        System.out.println("TOLOWER");
         String[] args = new String[10];
         args[0] = "localhost";
         args[1] = "308";
@@ -79,6 +78,5 @@ public class StringClientTest {
         StringClient.run(args, System.in);
         assertEquals("Response: MartinHarvey", out.toString().trim());
     }
-
 
 }

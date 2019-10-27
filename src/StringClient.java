@@ -29,7 +29,6 @@ public class StringClient {
             DataOutputStream toHost = new DataOutputStream(out);
 
             while (true) {
-               // System.out.print(">>");
                 String request = scan.nextLine();
                 toHost.writeUTF(request);
 
