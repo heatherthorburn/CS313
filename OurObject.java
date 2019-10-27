@@ -6,12 +6,6 @@ public class OurObject implements Serializable {
     private String[] arguments;
     private String result;
 
-    /*public static OurObject fromString(String str) {
-        String[] components = str.split(" ");
-        String command = components[0];
-        String[] arguments = Arrays.copyOfRange(components, 1, components.length);
-        return new OurObject(command, arguments);
-    }*/
 
     public OurObject(String com, String[] arg) {
         this.command = com;
