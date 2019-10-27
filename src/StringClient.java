@@ -9,8 +9,7 @@ public class StringClient {
             run(args, System.in);
         }
         catch(Exception e){
-            System.out.println("Oh No! Something went wrong!");
-            e.printStackTrace();
+            System.out.println("Shutting Down");
         }
     }
 
@@ -31,8 +30,8 @@ public class StringClient {
             System.out.println("Please Enter a command to send to server");
             System.out.println("getFirstName <firstname> <secondname>");
             System.out.println("getSecondName <firstname> <secondname>");
-            System.out.println("toUpper <firstname> <secondname>");
-            System.out.println("toLower <firstname> <secondname>");
+            System.out.println("toUpperCase <firstname> <secondname>");
+            System.out.println("toLowerCase <firstname> <secondname>");
 
             while (true) {
                 System.out.print(">>");
@@ -41,8 +40,15 @@ public class StringClient {
 
                 DataInputStream in = new DataInputStream(client_socket.getInputStream());
                 System.out.println("Response: " + in.readUTF());
+                if(in.readUTF() == "Bye!"){
+                    client_socket.close();
+                    break;
+                }
 
             }
+        }
+        catch (EOFException e){
+            System.out.println("Shutting Down");
         }
         catch(Exception e){
             System.out.println("Oh No! Something went wrong!");
